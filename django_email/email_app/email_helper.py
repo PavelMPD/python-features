@@ -1,7 +1,8 @@
 from django.core.mail import EmailMessage
+from email_app.abstract_email_helper import AbstractEmailHelper
 
 
-class EmailHelper():
+class EmailHelper(AbstractEmailHelper):
     def __init__(self):
         pass
 
@@ -14,4 +15,11 @@ class EmailHelper():
         from_email = "test@gmail.com"
         recipient_list = ["test1@gmail.com", "test1@gmail.com"]
         email = EmailMessage(subject, message, from_email, recipient_list)
+        filename, content = self._get_info_file()
+        email.attach(filename, content)
         email.send()
+
+    def _get_info_file(self):
+        filename = 'information.txt'
+        content = 'Information text'
+        return filename, content
